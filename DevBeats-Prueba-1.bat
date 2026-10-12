@@ -134,7 +134,7 @@ if not defined CHORD_FILE goto :menu
 set "CHORD_TITLE="
 set /p "CHORD_TITLE=Titulo de la cancion: "
 if not defined CHORD_TITLE set "CHORD_TITLE=Cancion importada"
-"%VENV_PY%" -m devbeats.main import-chords "%CHORD_FILE%" --title "%CHORD_TITLE%" --edit-if-missing
+"%VENV_PY%" -m devbeats.main import-chords "%CHORD_FILE%" --title "%CHORD_TITLE%" --edit-if-missing --edit
 echo.
 pause
 goto :menu

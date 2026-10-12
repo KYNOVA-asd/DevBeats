@@ -87,9 +87,15 @@ def import_chords(
         "--edit-if-missing",
         help="Crea source.txt y abre Bloc de notas cuando no existe.",
     ),
+    edit: bool = typer.Option(
+        False,
+        "--edit",
+        help="Abre el cancionero en Bloc de notas antes de generar.",
+    ),
 ) -> None:
     """Convierte letra y acordes en MIDI/MMP para escuchar en LMMS."""
     try:
+        opened_editor = False
         if source.is_dir():
             candidates = list(source.rglob("source.txt"))
             if title:
@@ -118,6 +124,7 @@ def import_chords(
                 console.print(f"[yellow]Cancionero creado:[/yellow] {new_source}")
                 console.print("[yellow]Pega tu letra y acordes, guarda y cierra el Bloc de notas.[/yellow]")
                 subprocess.run(["notepad.exe", str(new_source)], check=True)
+                opened_editor = True
                 candidates = [new_source]
             if len(candidates) > 1:
                 choices = ", ".join(str(candidate) for candidate in candidates[:5])
@@ -127,6 +134,9 @@ def import_chords(
                 )
             source = candidates[0]
             console.print(f"[cyan]Cancionero encontrado:[/cyan] {source}")
+        if edit and not opened_editor:
+            console.print("[yellow]Edita, guarda y cierra el Bloc de notas para continuar.[/yellow]")
+            subprocess.run(["notepad.exe", str(source)], check=True)
         text = source.read_text(encoding="utf-8")
         sheet = parse_chord_sheet(text)
         song_title = title or source.stem.replace("-", " ").title()
