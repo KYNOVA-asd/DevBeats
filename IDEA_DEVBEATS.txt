@@ -1,0 +1,333 @@
+DEVBEATS - PROPUESTA DE HERRAMIENTA
+===================================
+
+Quiero construir DevBeats, una herramienta de "musica como codigo" para personas que saben programar, pero no dominan teoria musical ni programas de produccion.
+
+Mi objetivo personal es crear canciones para mi bebe sin tener que pasar anos aprendiendo a utilizar un estudio musical completo. LMMS seria el estudio encargado de los instrumentos, la mezcla y la exportacion final, mientras que DevBeats facilitaria la composicion y el analisis.
+
+
+IDEA PRINCIPAL
+--------------
+
+DevBeats no debe ser un script para crear una sola cancion. Debe ser una herramienta reutilizable con, como minimo, una interfaz de terminal interactiva. Mas adelante podria incluir una interfaz grafica o web local.
+
+Flujo principal:
+
+    Usuario / Codex
+          |
+          v
+    Interfaz CLI o TUI de DevBeats
+          |
+          v
+    Proyecto musical editable en YAML o JSON
+          |
+          v
+    Generador y editor MIDI
+          |
+          v
+    LMMS para instrumentos, mezcla y exportacion
+
+
+EJEMPLO DE USO EN TERMINAL
+--------------------------
+
+    devbeats new "Cancion para mi bebe"
+    devbeats open canciones/cancion-para-mi-bebe
+    devbeats compose --style lullaby --duration 60
+    devbeats tempo 70
+    devbeats add melody
+    devbeats add chords
+    devbeats add drums --style soft
+    devbeats build
+    devbeats export midi
+    devbeats lmms
+
+Tambien quiero un modo interactivo parecido a un chat:
+
+    devbeats> crea una cancion de cuna dulce de 60 segundos
+    devbeats> hazla mas lenta
+    devbeats> agrega una segunda melodia suave
+    devbeats> exporta el resultado para LMMS
+
+
+FORMATO DEL PROYECTO
+--------------------
+
+Cada cancion podria mantenerse como un proyecto editable:
+
+    canciones/
+      cancion-para-mi-bebe/
+        song.yaml
+        output.mid
+        proyecto.mmpz
+        referencias/
+        stems/
+        exports/
+
+Ejemplo de song.yaml:
+
+    titulo: Cancion para mi bebe
+    tempo: 70
+    tonalidad: C
+    estilo: lullaby
+    instrumento: music_box
+
+    melodia:
+      - C4:1
+      - C4:1
+      - G4:1
+      - G4:1
+      - A4:1
+      - A4:1
+      - G4:2
+
+
+REFERENCIAS DE YOUTUBE Y ANALISIS DE AUDIO
+-----------------------------------------
+
+Quiero incluir un boton o comando para agregar una referencia de YouTube. YouTube funcionaria como buscador de referencias musicales, no como una fuente para copiar canciones protegidas.
+
+Flujo propuesto:
+
+    URL o busqueda de YouTube
+              |
+              v
+    yt-dlp obtiene el audio de referencia
+              |
+              v
+    Demucs separa voz, bateria, bajo y acompanamiento
+              |
+              v
+    DevBeats analiza:
+      - tempo y patron ritmico
+      - tonalidad
+      - acordes aproximados
+      - estructura de la cancion
+      - instrumentos
+      - melodia aproximada en MIDI
+              |
+              v
+    DevBeats genera una composicion nueva y original
+              |
+              v
+    Exportacion a LMMS
+
+Comandos posibles:
+
+    devbeats reference add "URL"
+    devbeats reference search "cancion o estilo"
+    devbeats reference analyze
+    devbeats reference separate
+    devbeats reference extract-midi melody
+    devbeats compose --inspired-by referencia-01
+
+
+LETRAS
+------
+
+Quiero que DevBeats tambien pueda trabajar con letras:
+
+    devbeats lyrics search "artista cancion"
+    devbeats lyrics transcribe referencia-01
+    devbeats lyrics draft --theme "amor de papa para su bebe"
+
+Tecnologias que podrian utilizarse:
+
+    - lyricsgenius para buscar letras y metadatos.
+    - Whisper para intentar transcribir voz cantada.
+    - Un generador de letras originales basado en tema, estructura y ritmo.
+
+
+GEMINI COMO SUPERVISOR Y DIRECTOR DE ORQUESTA
+---------------------------------------------
+
+Quiero integrar la API de Gemini como una capa opcional de inteligencia musical. Su funcion no seria reemplazar el motor determinista de DevBeats, sino interpretar las peticiones del usuario y actuar como supervisor de prompts y director de orquesta.
+
+Flujo propuesto:
+
+    Peticion del usuario en lenguaje natural
+                 |
+                 v
+    Gemini convierte la peticion en un plan musical estructurado
+                 |
+                 v
+    DevBeats valida y genera la cancion de forma determinista
+                 |
+                 v
+    Gemini revisa la arquitectura musical del resultado
+                 |
+                 v
+    Reporte con calificacion, observaciones y cambios sugeridos
+                 |
+                 v
+    Usuario aprueba los cambios o solicita una nueva version
+
+Gemini podria evaluar:
+
+    - claridad de la intencion y del prompt;
+    - orden de las secciones de la cancion;
+    - coherencia entre melodia, acordes, bajo y ritmo;
+    - variedad y repeticion;
+    - adecuacion del tempo y la tonalidad al estilo solicitado;
+    - rango de notas y dificultad;
+    - duracion y transiciones;
+    - relacion entre letra, silabas y melodia;
+    - adecuacion para una cancion infantil o de cuna;
+    - originalidad estructural respecto a las referencias analizadas.
+
+Ejemplo de reporte:
+
+    DEVBEATS ORCHESTRA REVIEW
+
+    Intencion:             9/10
+    Melodia:               8/10
+    Armonia:               7/10
+    Ritmo:                 8/10
+    Estructura:            9/10
+    Letra y prosodia:      7/10
+    Adecuacion infantil:  10/10
+
+    Calificacion general: 8.3/10
+    Estado: APROBADA CON SUGERENCIAS
+
+    Sugerencias:
+      - Suavizar el salto de G4 a E5.
+      - Repetir el coro una vez al final.
+      - Reducir la bateria durante la segunda estrofa.
+
+Comandos posibles:
+
+    devbeats ai configure gemini
+    devbeats ai plan "crea una cancion de cuna sobre las estrellas"
+    devbeats review
+    devbeats review --strict
+    devbeats review --focus melody
+    devbeats apply-suggestions
+    devbeats approve
+
+En la interfaz grafica podria existir un panel llamado "Director de orquesta":
+
+    [ Revisar cancion ]
+    [ Ver calificacion ]
+    [ Aplicar sugerencias seleccionadas ]
+    [ Aprobar version ]
+
+Las sugerencias nunca deberian modificar automaticamente el proyecto sin guardar una version anterior o solicitar aprobacion. Cada revision deberia producir datos estructurados en JSON, ademas de una explicacion legible.
+
+Para evitar dependencia de un solo servicio, DevBeats deberia definir una interfaz generica de proveedores de IA:
+
+    AIProvider
+      - plan_song(request)
+      - review_song(project)
+      - suggest_changes(project)
+      - draft_lyrics(theme)
+
+Gemini seria el primer proveedor, pero posteriormente se podrian agregar otros modelos locales o servicios externos. La clave de la API se cargaria desde una variable de entorno o almacen seguro y nunca se guardaria dentro del repositorio ni de los archivos de las canciones.
+
+
+TECNOLOGIAS PROPUESTAS
+----------------------
+
+    - Python como lenguaje principal.
+    - Typer o Click para la interfaz CLI.
+    - Textual o Rich para una interfaz de terminal interactiva.
+    - mido para crear y editar archivos MIDI.
+    - yt-dlp para obtener referencias autorizadas.
+    - ffmpeg para convertir y recortar audio.
+    - Demucs para separar pistas o stems.
+    - librosa para analizar tempo, tonalidad y audio.
+    - Basic Pitch para convertir melodias de audio a MIDI.
+    - lyricsgenius para consultar letras y metadatos.
+    - Whisper para transcripcion.
+    - API de Gemini para planificacion, supervision y revision musical.
+    - Pydantic o JSON Schema para validar las respuestas estructuradas de la IA.
+    - LMMS para instrumentos, mezcla y exportacion final.
+
+
+MODOS DE TRABAJO
+----------------
+
+    1. Original
+       Crea una composicion completamente nueva.
+
+    2. Referencia
+       Analiza tempo, tonalidad, estructura e instrumentacion de una cancion sin copiarla.
+
+    3. Remix autorizado
+       Trabaja con grabaciones propias, de dominio publico o con permiso/licencia.
+
+El sistema debe evitar presentar como original una copia de melodias, letras o beats protegidos. Para canciones destinadas a publicarse, deberia priorizar composiciones originales y material autorizado.
+
+
+DESARROLLO POR ETAPAS
+---------------------
+
+Fase 1 - Nucleo y CLI
+    - Crear y abrir proyectos.
+    - Leer y escribir song.yaml.
+    - Crear melodias, acordes y ritmos sencillos.
+    - Exportar MIDI para LMMS.
+    - Validar notas, duraciones, tempo y estructura.
+
+Fase 2 - Terminal interactiva
+    - Interfaz con Rich o Textual.
+    - Comandos conversacionales.
+    - Reproductor o previsualizacion basica.
+    - Historial y deshacer cambios.
+
+Fase 3 - Referencias
+    - Integracion opcional con yt-dlp.
+    - Analisis de tempo y tonalidad.
+    - Separacion de stems.
+    - Extraccion aproximada de MIDI.
+
+Fase 4 - Letras y composicion asistida
+    - Busqueda y transcripcion.
+    - Creacion de letras originales.
+    - Ajuste de silabas a notas y compases.
+
+Fase 4.5 - Director de orquesta con Gemini
+    - Configurar Gemini mediante una clave externa segura.
+    - Convertir peticiones naturales en planes musicales estructurados.
+    - Revisar y calificar canciones con criterios configurables.
+    - Generar sugerencias en JSON validado.
+    - Permitir revisar diferencias antes de aplicar cambios.
+    - Mantener historial de versiones y aprobaciones.
+
+Fase 5 - Interfaz visual
+    - Aplicacion web local o de escritorio.
+    - Piano roll sencillo.
+    - Controles de tempo, instrumentos y estructura.
+    - Botones para analizar, separar, generar y abrir en LMMS.
+
+Fase 6 - Integracion avanzada con LMMS
+    - Detectar la instalacion de LMMS.
+    - Abrir archivos MIDI o proyectos.
+    - Investigar la generacion segura de archivos MMP/MMPZ.
+    - Automatizar las operaciones que LMMS permita oficialmente.
+
+
+PREGUNTA
+--------
+
+Como se deberia disenar e implementar DevBeats para que sea una herramienta mantenible y extensible?
+
+Me interesa recibir recomendaciones sobre:
+
+    - arquitectura del proyecto;
+    - alcance adecuado del MVP;
+    - formato interno de las canciones;
+    - diseno de la CLI y la terminal interactiva;
+    - generacion y edicion de MIDI;
+    - integracion con LMMS;
+    - analisis de referencias musicales;
+    - separacion de stems y conversion de audio a MIDI;
+    - letras, transcripcion y sincronizacion de silabas;
+    - integracion de Gemini como supervisor de prompts y director de orquesta;
+    - criterios objetivos para calificar y aprobar una cancion;
+    - validacion de respuestas estructuradas y seguridad de claves de API;
+    - licencias y limites al utilizar referencias externas;
+    - rendimiento y requisitos de hardware;
+    - distribucion e instalacion en Windows.
+
+La prioridad es conseguir rapidamente una version util para crear canciones infantiles originales, sin cerrar la posibilidad de convertir DevBeats en una herramienta musical mas completa.
