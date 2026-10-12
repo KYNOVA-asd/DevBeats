@@ -37,6 +37,18 @@ python -m devbeats.main ai-plan "cancion de cuna espacial, muy tranquila"
 Este comando utiliza la herramienta oficial Google Search de Gemini, valida el
 plan recibido y genera `song.yaml`, `ai-plan.json`, `output.mid` y `output.mmp`.
 
+Para convertir un cancionero con acordes y letra directamente a LMMS:
+
+```powershell
+python -m devbeats.main import-chords canciones/toro-me-perdonas/source.txt `
+  --title "Toro me perdonas" --tempo 72
+```
+
+El resultado contiene una melodia guia instrumental, acordes y bajo. DevBeats
+no exporta MP3: el archivo MIDI se importa y reproduce dentro de LMMS.
+Desde el menu BAT, si no existe `source.txt`, DevBeats lo crea y abre el Bloc de
+notas. La generacion continua al guardar y cerrar el editor.
+
 El primer comando crea `CancionBebe/song.yaml` y registra ese directorio como
 proyecto activo. `build` genera `CancionBebe/output.mid` y
 `CancionBebe/output.mmp`. Tambien se puede indicar un proyecto explicitamente:

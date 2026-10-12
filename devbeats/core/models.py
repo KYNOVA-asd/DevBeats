@@ -1,8 +1,6 @@
 """Modelos de dominio y persistencia YAML."""
 
 from pathlib import Path
-from typing import Literal
-
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -53,7 +51,7 @@ class Song(BaseModel):
 
     metadata: Metadata
     tempo: int = Field(default=68, ge=30, le=240)
-    key: Literal["C"] = "C"
+    key: str = Field(default="C", pattern=r"^[A-G](?:#|b)?m?$")
     time_signature: str = "4/4"
     bars: int = Field(default=8, ge=1, le=128)
     seed: int = 42

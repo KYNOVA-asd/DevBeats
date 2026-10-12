@@ -42,6 +42,7 @@ echo   5. Abrir carpeta del proyecto
 echo   6. Probar conexion con Gemini
 echo   7. Buscar musica con Google IA
 echo   8. Crear cancion con Gemini + Google Search
+echo   9. Importar letra y acordes para LMMS
 echo   0. Salir
 echo.
 set "OPTION="
@@ -55,6 +56,7 @@ if "%OPTION%"=="5" goto :open_folder
 if "%OPTION%"=="6" goto :ai_test
 if "%OPTION%"=="7" goto :google_search
 if "%OPTION%"=="8" goto :ai_plan
+if "%OPTION%"=="9" goto :import_chords
 if "%OPTION%"=="0" goto :end
 echo.
 echo Opcion no valida.
@@ -120,6 +122,19 @@ set "SONG_REQUEST="
 set /p "SONG_REQUEST=Describe la cancion que quieres: "
 if not defined SONG_REQUEST goto :menu
 "%VENV_PY%" -m devbeats.main ai-plan "%SONG_REQUEST%"
+echo.
+pause
+goto :menu
+
+:import_chords
+echo.
+set "CHORD_FILE="
+set /p "CHORD_FILE=Ruta de canciones o del archivo TXT: "
+if not defined CHORD_FILE goto :menu
+set "CHORD_TITLE="
+set /p "CHORD_TITLE=Titulo de la cancion: "
+if not defined CHORD_TITLE set "CHORD_TITLE=Cancion importada"
+"%VENV_PY%" -m devbeats.main import-chords "%CHORD_FILE%" --title "%CHORD_TITLE%" --edit-if-missing
 echo.
 pause
 goto :menu

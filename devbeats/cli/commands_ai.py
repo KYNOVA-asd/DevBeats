@@ -2,6 +2,7 @@
 
 import json
 import re
+import unicodedata
 from pathlib import Path
 
 import typer
@@ -39,7 +40,12 @@ def ai_test() -> None:
 
 
 def _safe_folder_name(title: str) -> str:
-    name = re.sub(r"[^A-Za-z0-9_-]+", "-", title.strip()).strip("-").lower()
+    ascii_title = (
+        unicodedata.normalize("NFKD", title)
+        .encode("ascii", "ignore")
+        .decode("ascii")
+    )
+    name = re.sub(r"[^A-Za-z0-9_-]+", "-", ascii_title.strip()).strip("-").lower()
     return name or "cancion-ia"
 
 
