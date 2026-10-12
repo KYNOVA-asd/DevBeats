@@ -1,0 +1,13 @@
+metadata:
+  title: Sueño Estelar
+  composer: DevBeats
+  description: Una canción de cuna suave y envolvente centrada en el brillo apacible
+    de las estrellas, diseñada para inducir el sueño profundo del bebé mediante un
+    tejido melódico minimalista y calmante en Do mayor.
+tempo: 64
+key: C
+time_signature: 4/4
+bars: 16
+seed: 20241027
+humanize: true
+tracks: []

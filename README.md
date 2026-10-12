@@ -19,6 +19,24 @@ python -m devbeats.main new "CancionBebe"
 python -m devbeats.main build
 ```
 
+En Windows tambien se puede abrir `DevBeats-Prueba-1.bat` con doble clic. El
+archivo prepara el entorno cuando sea necesario y muestra un menu para crear,
+revisar y construir canciones.
+
+`abrir_app.bat` es el acceso directo de la prueba local. La opcion **Buscar
+musica con Google IA** entrega una consulta al modo IA de Google en Edge. Su
+comportamiento se configura en `devbeats.profile.yaml`; DevBeats solo abre la
+busqueda y no extrae automaticamente contenido de la pagina.
+
+Para cerrar el ciclo de investigacion y composicion se puede usar:
+
+```powershell
+python -m devbeats.main ai-plan "cancion de cuna espacial, muy tranquila"
+```
+
+Este comando utiliza la herramienta oficial Google Search de Gemini, valida el
+plan recibido y genera `song.yaml`, `ai-plan.json`, `output.mid` y `output.mmp`.
+
 El primer comando crea `CancionBebe/song.yaml` y registra ese directorio como
 proyecto activo. `build` genera `CancionBebe/output.mid` y
 `CancionBebe/output.mmp`. Tambien se puede indicar un proyecto explicitamente:

@@ -34,6 +34,20 @@ class Metadata(BaseModel):
     description: str = ""
 
 
+class SongPlan(BaseModel):
+    """Plan estructurado producido por un supervisor de IA."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    title: str = Field(min_length=1, max_length=80)
+    description: str = Field(min_length=1, max_length=500)
+    tempo: int = Field(default=68, ge=50, le=90)
+    bars: int = Field(default=8, ge=4, le=32)
+    seed: int = Field(default=42, ge=0, le=2_147_483_647)
+    mood: str = Field(default="dulce", min_length=1, max_length=80)
+    research_summary: str = Field(default="", max_length=1000)
+
+
 class Song(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

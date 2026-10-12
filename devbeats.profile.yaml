@@ -1,0 +1,17 @@
+# Perfil local de comportamiento de DevBeats.
+browser_search:
+  enabled: true
+  browser: edge
+  engine: google_ai
+  base_url: https://www.google.com/search
+  query_parameter: q
+  extra_parameters:
+    udm: "50"
+  language: es
+  country: MX
+
+# Este perfil no contiene secretos. Las claves privadas pertenecen a .env.
+ai_supervisor:
+  provider: gemini
+  model_from_env: GEMINI_MODEL
+

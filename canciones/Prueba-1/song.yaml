@@ -1,0 +1,11 @@
+metadata:
+  title: Prueba-1
+  composer: DevBeats
+  description: Cancion de cuna creada con DevBeats
+tempo: 68
+key: C
+time_signature: 4/4
+bars: 8
+seed: 42
+humanize: true
+tracks: []
