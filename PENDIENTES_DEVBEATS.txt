@@ -1,0 +1,161 @@
+DEVBEATS - ESTADO Y PENDIENTES
+Fecha: 12 de octubre de 2026
+========================================
+
+OBJETIVO
+--------
+Crear una herramienta local para personas que saben programar pero no dominan
+teoria musical ni LMMS. El usuario describe o pega una cancion, DevBeats genera
+las notas y LMMS se utiliza para escuchar y continuar editando.
+
+LO QUE YA FUNCIONA
+------------------
+1. Python 3.12 y entorno virtual .venv instalados.
+2. CLI construida con Typer y Rich.
+3. Menu: C:\Users\acouo\Videos\proyectos\DevBeats\abrir_app.bat
+4. Creacion de canciones de cuna.
+5. Exportacion MIDI valida y exportacion de proyectos LMMS .mmp.
+6. Lectura y escritura de song.yaml.
+7. Integracion funcional con Gemini mediante Interactions API.
+8. Modelo configurado: gemini-3.5-flash-lite.
+9. Google Search grounding integrado con respaldo cuando no hay cuota. La
+   cuenta devolvio 429 para Search, pero Gemini sin busqueda funciona.
+10. Busqueda manual en el modo IA de Google mediante Edge.
+11. Importador de letra y acordes con tonalidad y secciones.
+12. Normalizacion de nombres: Sueno -> sueno; Cancion -> cancion.
+13. Generacion de Melodia guia, Guitarra/acordes y Bajo.
+14. La opcion 9 crea source.txt cuando falta y siempre abre Bloc de notas.
+15. Nueve pruebas automatizadas aprobadas.
+
+MENU ACTUAL
+-----------
+1. Crear una cancion nueva
+2. Ver estado del proyecto activo
+3. Construir MIDI y proyecto LMMS
+4. Mostrar ayuda de DevBeats
+5. Abrir carpeta del proyecto
+6. Probar conexion con Gemini
+7. Buscar musica con Google IA
+8. Crear cancion con Gemini + Google Search
+9. Importar letra y acordes para LMMS
+0. Salir
+
+PROYECTO DE PRUEBA ACTUAL
+-------------------------
+Carpeta:
+C:\Users\acouo\Videos\proyectos\DevBeats\canciones\toro5
+
+Proyecto guardado manualmente en LMMS:
+C:\Users\acouo\Videos\proyectos\DevBeats\canciones\toro5\output-proyecto2.mmp
+
+Tambien contiene output.mmp, output.mid, source.txt y song.yaml.
+El proyecto reproduce sonido, pero actualmente se escucha como flauta y buzzer.
+Esto confirma que las notas funcionan. Falta el timbre y la interpretacion de
+guitarra realista.
+
+HALLAZGOS SOBRE LMMS
+--------------------
+- Los archivos .mmp son XML.
+- Los .mmpz contienen XML comprimido con zlib y encabezado de cuatro bytes.
+- Los presets .xiz de ZynAddSubFX son XML comprimido con gzip.
+- Los presets .xpf son XML de configuracion de pista/instrumento.
+- El constructor MMP ahora usa la estructura de LMMS 1.2.2 e incluye
+  TripleOscillator. Esto garantiza sonido, aunque sea sintetico.
+
+PRESETS DE GUITARRA ENCONTRADOS
+-------------------------------
+C:\Program Files\LMMS\data\presets\ZynAddSubFX\Collection\0108-Nylon Guitar.xiz
+C:\Program Files\LMMS\data\presets\ZynAddSubFX\Guitar\0065-Clean Guitar1.xiz
+C:\Program Files\LMMS\data\presets\ZynAddSubFX\olivers-100\0013-Soft Guitar.xiz
+C:\Program Files\LMMS\data\presets\TripleOscillator\SEGuitar.xpf
+
+El preset Nylon Guitar.xiz contiene un instrumento ZynAddSubFX completo en XML.
+
+ARCHIVO DE GUITARRA DEL USUARIO
+-------------------------------
+Ruta:
+C:\Users\acouo\Videos\proyectos\DevBeats\canciones\prueba2-lmms\Guitarra.xpf
+
+No es una cancion ni contiene notas. Es un preset de pista de 46,014 bytes.
+Datos confirmados:
+- Formato XML instrumenttracksettings.
+- Instrumento zynaddsubfx.
+- Creado con LMMS 0.4.10.
+- Contiene ZynAddSubFX-data completo.
+- Puede servir como plantilla para sustituir TripleOscillator por guitarra.
+
+PROBLEMA MUSICAL PENDIENTE
+--------------------------
+Cambiar el sonido no basta. DevBeats necesita core/guitar_arranger.py para
+generar:
+1. Voicings posibles de guitarra.
+2. Cuerdas y registro apropiados.
+3. Rasgueos abajo/arriba.
+4. Desfases entre cuerdas.
+5. Velocidad diferente por cuerda.
+6. Arpegios y silencios.
+7. Transiciones naturales entre posiciones.
+8. Patrones para balada, lullaby, pop, bolero, etc.
+
+Voicings iniciales sugeridos:
+Dm:    D3 A3 D4 F4
+Asus4: A2 E3 A3 D4 E4
+Gm:    G2 D3 G3 Bb3 D4 G4
+C:     C3 G3 C4 E4 G4
+Bb:    Bb2 F3 Bb3 D4 F4
+F:     F2 C3 F3 A3 C4
+A7:    A2 E3 G3 C#4 E4
+F#dim: F#2 A2 C3 F#3 A3 C4
+
+SIGUIENTE PASO RECOMENDADO
+--------------------------
+1. Leer Guitarra.xpf o 0108-Nylon Guitar.xiz.
+2. Extraer el nodo <instrument name="zynaddsubfx"> completo.
+3. Inyectarlo en la pista llamada Guitarra dentro de output.mmp.
+4. Conservar patrones y notas.
+5. Crear core/guitar_arranger.py para que las notas se comporten como guitarra.
+6. Agregar al BAT: 10. Aplicar instrumentos reales de LMMS.
+7. Regenerar toro5 o una prueba nueva elegida por el usuario.
+8. El usuario abre y prueba el proyecto. Codex no debe hacer la prueba por el
+   usuario salvo que se lo pidan expresamente.
+
+REGLAS DE EXPERIENCIA DE USUARIO
+--------------------------------
+1. El usuario no debe conocer la estructura interna de carpetas.
+2. Debe bastar con elegir carpeta, escribir titulo y pegar contenido.
+3. La opcion 9 debe abrir Bloc de notas siempre.
+4. DevBeats debe localizar o crear source.txt automaticamente.
+5. Abrir un proyecto LMMS debe permitir pulsar Play y escuchar sonido.
+6. No exigir que el usuario configure instrumentos manualmente.
+7. Separar fuentes y resultados para no perder la letra al borrar un proyecto.
+8. No generar MP3; escuchar y editar dentro de LMMS.
+9. No adelantarse a realizar la prueba que el usuario quiere hacer.
+
+ARCHIVOS PRINCIPALES
+--------------------
+pyproject.toml
+requirements.txt
+abrir_app.bat
+DevBeats-Prueba-1.bat
+devbeats.profile.yaml
+.env
+.env.example
+README.md
+IDEA_DEVBEATS.txt
+devbeats/main.py
+devbeats/core/models.py
+devbeats/core/music_theory.py
+devbeats/core/generator.py
+devbeats/core/chord_parser.py
+devbeats/core/arranger.py
+devbeats/adapters/midi_exporter.py
+devbeats/adapters/lmms_builder.py
+devbeats/adapters/gemini_supervisor.py
+devbeats/adapters/browser_search.py
+
+COMANDO PARA REANUDAR PRUEBAS
+-----------------------------
+cd C:\Users\acouo\Videos\proyectos\DevBeats
+.\.venv\Scripts\python.exe -m pytest
+
+Estado al cerrar: 9 pruebas aprobadas.
